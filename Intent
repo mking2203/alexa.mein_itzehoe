@@ -1,0 +1,37 @@
+{
+  "intents": [
+    {
+      "intent": "WelcomeIntent"
+    },
+    {
+      "intent": "RestaurantIntent"
+    },
+    {
+      "slots": [
+        {
+          "name": "Restaurant",
+          "type": "LIST_OF_RESTAURANT"
+        }
+      ],
+      "intent": "RestaurantDetailIntent"
+    },
+    {
+      "slots": [
+        {
+          "name": "Rest_Typ",
+          "type": "LIST_OF_REST_TYP"
+        }
+      ],
+      "intent": "RestaurantTypIntent"
+    },
+    {
+      "intent": "AMAZON.HelpIntent"
+    },
+    {
+      "intent": "AMAZON.StopIntent"
+    },
+    {
+      "intent": "AMAZON.CancelIntent"
+    }
+  ]
+}
