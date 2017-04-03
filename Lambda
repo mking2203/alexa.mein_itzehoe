@@ -102,12 +102,12 @@ def get_restaurant_response():
     
     speech_output = "Meine Restaurant Empfehlungen. "
     
-    speech_output += "Sage Restaurant Grieche, Restaurant Italiener oder Restaurant Chinese."
+    speech_output += "Sagen Sie Restaurant Grieche, Restaurant Italiener oder Restaurant Chinese."
 
     # If the user either does not reply to the welcome message or says something
     # that is not understood, they will be prompted again with this text.
-    reprompt_text = "Please tell me your favorite color by saying, " \
-                    "my favorite color is red."
+    reprompt_text = speech_output
+    
     should_end_session = False
     return build_response(session_attributes, build_speechlet_response(
         "Griechen in Itzehoe", speech_output, "", reprompt_text, should_end_session))
@@ -119,6 +119,7 @@ def detailRest_Typ_in_session(intent, session):
     should_end_session = False
 
     if 'Rest_Typ' in intent['slots']:
+        
         value = intent['slots']['Rest_Typ']['value']
         value = value.upper()
         
@@ -127,41 +128,52 @@ def detailRest_Typ_in_session(intent, session):
         
         if value.startswith("G"):
             speech_output = "Ich empfehle folgende 3 Griechen in Itzehoe. Athina, Babylon und Rhodos."
-            reprompt_text = "Sagen sie Athina, Babylon oder Rhodos"
+            reprompt_text = "Sagen sie Restaurant Athina, Restaurant Babylon oder Restaurant Rhodos"
             image = "greek"
         if value.startswith("I"):
             speech_output = "Ich empfehle folgende 3 Italiener in Itzehoe. Amadeus, Il Piccolo und La Stalla."
-            reprompt_text = "Sagen sie Amadeus, Il Piccolo oder La Stalla"
+            reprompt_text = "Sagen sie Restaurant Restaurant Amadeus, Restaurant Il Piccolo oder Restaurant La Stalla."
             image = "italy"
         if value.startswith("C"):
             speech_output = "Ich empfehle folgende 2 Chinesen in Itzehoe. La Vong und Chi Wan."
-            reprompt_text = "Sagen sie La Vong Chi Wan"
+            reprompt_text = "Sagen sie Restaurant La Vong oder Restaurant Chi Wan."
             image = "china"
         
         reprompt_text = reprompt_text
     else:
-        speech_output = "Das habe ich nicht verstanden ! Sage Grieche, Italiener oder Chinese."
-        reprompt_text = "Das habe ich nicht verstanden ! Sage Grieche, Italiener oder Chinese."
+        speech_output = "Das habe ich nicht verstanden !"
+        reprompt_text = "Das habe ich nicht verstanden !"
         
     return build_response(session_attributes, build_speechletStandard_response(
         card_title, speech_output, "https://s3-eu-west-1.amazonaws.com/mkingpictures/" + image, reprompt_text, should_end_session))
         
 def detailRestaurant_in_session(intent, session):
-    """ Sets the color in the session and prepares the speech to reply to the
-    user.
-    """
 
     card_title = intent['name']
     session_attributes = {}
     should_end_session = False
 
     if 'Restaurant' in intent['slots']:
-        favorite_color = intent['slots']['Restaurant']['value']
         
-        card_title = "Restaurant " + favorite_color
-        speech_output = "Also das Restaurant " + favorite_color
-                       
-        reprompt_text = "Also das Restaurant " + favorite_color
+        restaurant = intent['slots']['Restaurant']['value']
+        
+        card_title = "Restaurant " + restaurant
+        speech_output = ""
+        
+        if(restaurant == 'athina'):
+            speech_output = "Ein kleiner Grieche am Sandberg. Telefon Neun,Sieben,Sieben,Eins. Montag ist Ruhetag."
+        if(restaurant == 'babylon'):
+            speech_output = "Ein Grieche mit Ambiente am Sandberg. Telefon Sechs,Null,Null,Sieben,Null,Acht. Täglich geöffnet."
+        if(restaurant == 'rhodos'):
+            speech_output = "Ein Grieche mit Biergarten am Meierei Parkplatz. Telefon Zwei,Fünf,Zwei,Null. Täglich geöffnet."
+        if(restaurant == 'amadeus'):
+            speech_output = "Ein Italiener mit Biergarten und Steinofen am Rathaus. Telefon Fünf,Fünf,Zwei,Sieben. Täglich geöffnet."
+        if(restaurant == 'il piccolo'):
+            speech_output = "Ein kleiner Italiener mit authentischen Speisen. Telefon Acht,Acht,Sieben,Neun,Acht,Sieben,Sechs. Täglich geöffnet."  
+        if(restaurant == 'la stella'):
+            speech_output = "Ein kleiner Italiener am Sandberg. Telefon Sieben,Sieben,Neun,Zwei,Eins,Drei,Drei. Montag ist Ruhetag."             
+                      
+        reprompt_text = "Möchten Sie noch weitere Informationen ? Sagen Sie Restaurant, Kino oder Schwimmbad."
     else:
         speech_output = "I'm not sure what your favorite color is. " \
                         "Please try again."
