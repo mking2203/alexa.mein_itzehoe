@@ -1,0 +1,4 @@
+WelcomeIntent Welcome
+RestaurantIntent Restaurant
+RestaurantDetailIntent Restaurant {Restaurant}
+RestaurantTypIntent Restaurant {Rest_Typ}
